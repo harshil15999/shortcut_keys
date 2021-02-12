@@ -5,17 +5,22 @@ function create_new_tab(url) {
       url: url,
       active: false,
     },
-    () => {
-      console.log("success");
-    }
+    
   );
 }
+var link;
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.url) {
-    create_new_tab(request.url);
-    console.log(sender.tab.url);
-    console.log(request.url);
+ 
 
-    sendResponse({ farewell: "success" });
+  if (request.status==200) {
+    console.log(request)
+   
+    create_new_tab(request.url);
+
   }
+  
 });
+
+
+
+
