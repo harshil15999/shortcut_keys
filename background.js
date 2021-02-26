@@ -1,26 +1,17 @@
 console.log("hello");
-function create_new_tab(url) {
-  chrome.tabs.create(
-    {
-      url: url,
-      active: false,
-    },
-    
-  );
+function create_new_tab(url, id) {
+  chrome.tabs.create({
+    url: url,
+    active: false,
+    index: id,
+  });
 }
 var link;
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
- 
-
-  if (request.status==200) {
-    console.log(request)
-   
-    create_new_tab(request.url);
-
+chrome.runtime.onMessage.addListener(function (request, sender) {
+  if (request.status == 200) {
+    console.log(request);
+    console.log(sender.tab.index + request.count);
+    create_new_tab(request.url, sender.tab.index + request.count);
   }
-  
+  console.log("sent from tab.id ", sender.tab.index);
 });
-
-
-
-
